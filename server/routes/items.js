@@ -22,6 +22,7 @@ router.post("/", async (req, res) => {
   const item = new Item({
     name: req.body.name,
     description: req.body.description,
+    category: req.body.category,
   });
   try {
     const newItem = await item.save();
@@ -33,11 +34,14 @@ router.post("/", async (req, res) => {
 
 // Updating One
 router.patch("/:id", getItem, async (req, res) => {
-  if (req.item.name != null) {
+  if (req.body.name != null) {
     res.item.name = req.body.name;
   }
   if (req.body.description != null) {
     res.item.description = req.body.description;
+  }
+  if (req.body.category != null) {
+    res.item.category = req.body.category;
   }
   try {
     const updatedItem = await res.item.save();
@@ -50,7 +54,7 @@ router.patch("/:id", getItem, async (req, res) => {
 // Deleting One
 router.delete("/:id", getItem, async (req, res) => {
   try {
-    await res.item.remove();
+    await res.item.deleteOne();
     res.json({ message: "Deleted item" });
   } catch (err) {
     res.status(500).json({ message: err.message });
