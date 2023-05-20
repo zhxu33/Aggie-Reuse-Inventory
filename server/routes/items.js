@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 
 // Updating One
 router.patch("/:id", getItem, async (req, res) => {
-  if (req.item.name != null) {
+  if (req.body.name != null) {
     res.item.name = req.body.name;
   }
   if (req.body.description != null) {
@@ -50,7 +50,7 @@ router.patch("/:id", getItem, async (req, res) => {
 // Deleting One
 router.delete("/:id", getItem, async (req, res) => {
   try {
-    await res.item.remove();
+    await res.item.deleteOne();
     res.json({ message: "Deleted item" });
   } catch (err) {
     res.status(500).json({ message: err.message });
