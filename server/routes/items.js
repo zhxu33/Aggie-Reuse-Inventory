@@ -22,6 +22,7 @@ router.post("/", async (req, res) => {
   const item = new Item({
     name: req.body.name,
     description: req.body.description,
+    category: req.body.category,
   });
   try {
     const newItem = await item.save();
@@ -38,6 +39,9 @@ router.patch("/:id", getItem, async (req, res) => {
   }
   if (req.body.description != null) {
     res.item.description = req.body.description;
+  }
+  if (req.body.category != null) {
+    res.item.category = req.body.category;
   }
   try {
     const updatedItem = await res.item.save();
