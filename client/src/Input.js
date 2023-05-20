@@ -1,11 +1,30 @@
 import React, {useState} from "react";
 import { Button, Card, CardHeader, Grid, TextField, Box } from "@mui/material";
 import Navbar from "./NavBar.js";
-import Typography from '@mui/material/Typography';
+import Typography from '@mui/material/Typography'; 
+import MenuItem from '@mui/material/MenuItem';
 
 //import FormGroup from "@mui/material/FormGroup";
 //import FormControlLabel from "@mui/material/FormControlLabel";
- 
+
+const currencies = [
+  {
+    value: 'USD',
+    label: '$',
+  },
+  {
+    value: 'EUR',
+    label: '€',
+  },
+  {
+    value: 'BTC',
+    label: '฿',
+  },
+  {
+    value: 'JPY',
+    label: '¥',
+  },
+];
 
 const Input = () => {
 
@@ -23,6 +42,12 @@ const Input = () => {
   const handleSubmit = () => {
     console.log('submitted');
   }
+
+  const [selectedItem, setSelectedItem] = React.useState('');
+
+  const handleChange = (event) => {
+    setSelectedItem(event.target.value);
+  };
 
 
   return (
@@ -61,16 +86,49 @@ const Input = () => {
             paddingRight={3}
             paddingLeft={3}
           >
-            <Grid item md={4} xs={12}>
+            <Grid item md={12} xs={12}>
               <TextField
                 sx={{ backgroundColor: "#ffffff" }}
                 required
-                fullWidth
                 label="Item name"
                 variant="outlined"
                 value={itemName}
                 onChange={(event) => {setItemName(event.target.value)}}
               />
+            </Grid>
+
+            <Grid item md={6} xs={12}>
+              {/*<TextField
+                fullWidth
+                id="outlined-select-currency"
+                select
+                label="Item type"
+                defaultValue="EUR"
+                helperText="Please select your item type"
+              >
+                {currencies.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>*/}
+              <TextField
+                fullWidth
+                sx={{ backgroundColor: "#ffffff" }}
+                select
+                required
+                label="Item Type"
+                value={selectedItem}
+                onChange={handleChange}
+              >
+                <MenuItem value="clothing">Clothing</MenuItem>
+                <MenuItem value="school-supplies">School Supplies</MenuItem>
+                <MenuItem value="accessories-bags">Accessories & Bags</MenuItem>
+                <MenuItem value="craft-art-supplies">Craft & Art Supplies</MenuItem>
+                <MenuItem value="fabric-textiles">Fabric and textiles</MenuItem>
+                <MenuItem value="others">Other</MenuItem>
+
+              </TextField>
             </Grid>
 
             <Grid item md={10} xs={12}>
