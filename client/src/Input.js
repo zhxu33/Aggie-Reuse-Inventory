@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Button, Card, CardHeader, Grid, TextField, Box } from "@mui/material";
 import Navbar from "./NavBar.js";
-import MenuItem from '@mui/material/MenuItem';
 import Typography from "@mui/material/Typography";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+//import FormGroup from "@mui/material/FormGroup";
+//import FormControlLabel from "@mui/material/FormControlLabel";
 
 const Input = () => {
   const [itemName, setItemName] = useState("");
@@ -71,10 +73,11 @@ const Input = () => {
             paddingRight={3}
             paddingLeft={3}
           >
-            <Grid item md={12} xs={12}>
+            <Grid item md={4} xs={12}>
               <TextField
-                sx={{minWidth: '49%', backgroundColor: "#ffffff" }}
+                sx={{ backgroundColor: "#ffffff" }}
                 required
+                fullWidth
                 label="Item name"
                 variant="outlined"
                 value={itemName}
@@ -82,40 +85,6 @@ const Input = () => {
                   setItemName(event.target.value);
                 }}
               />
-            </Grid>
-
-            <Grid item md={6} xs={12}>
-              {/*<TextField
-                fullWidth
-                id="outlined-select-currency"
-                select
-                label="Item type"
-                defaultValue="EUR"
-                helperText="Please select your item type"
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>*/}
-              <TextField
-                fullWidth
-                sx={{ backgroundColor: "#ffffff" }}
-                select
-                required
-                label="Item Type"
-                value={selectedItem}
-                onChange={handleChange}
-              >
-                <MenuItem value="clothing">Clothing</MenuItem>
-                <MenuItem value="school-supplies">School Supplies</MenuItem>
-                <MenuItem value="accessories-bags">Accessories & Bags</MenuItem>
-                <MenuItem value="craft-art-supplies">Craft & Art Supplies</MenuItem>
-                <MenuItem value="fabric-textiles">Fabric and textiles</MenuItem>
-                <MenuItem value="others">Other</MenuItem>
-
-              </TextField>
             </Grid>
 
             <Grid item md={10} xs={12}>
