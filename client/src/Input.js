@@ -1,40 +1,31 @@
 import React, { useState } from "react";
-import { Button, Card, CardHeader, Grid, TextField, Box } from "@mui/material";
+import { Button, Card, Grid, TextField, Box } from "@mui/material";
 import Navbar from "./NavBar.js";
-import MenuItem from '@mui/material/MenuItem';
+import MenuItem from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Input = () => {
   const [itemName, setItemName] = useState("");
   const [itemDesc, setItemDesc] = useState("");
-
-  const handleDescChange = () => {
-    console.log("desc changed");
-  };
-
-  const handleNameChange = () => {
-    console.log("name changed");
-  };
-
-  const [selectedItem, setSelectedItem] = React.useState('');
+  const [selectedItem, setSelectedItem] = React.useState("");
 
   const handleChange = (event) => {
     setSelectedItem(event.target.value);
   };
 
-  const navigate = useNavigate();
   const API_URL = "http://localhost:5000/items";
 
   const handleSubmit = async () => {
-    const itemData = { name: itemName, description: itemDesc };
-    console.log(itemData);
+    const itemData = {
+      name: itemName,
+      description: itemDesc,
+      category: selectedItem,
+    };
     try {
       const response = await axios.post(API_URL, itemData);
       if (response.data) {
         alert("Item added successfully!");
-        navigate("/");
       }
     } catch (error) {
       alert("Failed, please add item data");
@@ -59,7 +50,6 @@ const Input = () => {
             minWidth: "45vw",
           }}
         >
-          {/*<CardHeader subheader="Add your item: " />*/}
           <Typography
             variant="h5"
             component="div"
@@ -68,7 +58,7 @@ const Input = () => {
             paddingLeft={3}
             sx={{ mb: 1.5, fontWeight: "bold", color: "#054287" }}
           >
-            Add your items:
+            Add your item:
           </Typography>
           <Grid
             container
@@ -79,7 +69,7 @@ const Input = () => {
           >
             <Grid item md={12} xs={12}>
               <TextField
-                sx={{minWidth: '49%', backgroundColor: "#ffffff" }}
+                sx={{ minWidth: "49%", backgroundColor: "#ffffff" }}
                 required
                 label="Item name"
                 variant="outlined"
@@ -91,20 +81,6 @@ const Input = () => {
             </Grid>
 
             <Grid item md={6} xs={12}>
-              {/*<TextField
-                fullWidth
-                id="outlined-select-currency"
-                select
-                label="Item type"
-                defaultValue="EUR"
-                helperText="Please select your item type"
-              >
-                {currencies.map((option) => (
-                  <MenuItem key={option.value} value={option.value}>
-                    {option.label}
-                  </MenuItem>
-                ))}
-              </TextField>*/}
               <TextField
                 fullWidth
                 sx={{ backgroundColor: "#ffffff" }}
@@ -117,10 +93,11 @@ const Input = () => {
                 <MenuItem value="clothing">Clothing</MenuItem>
                 <MenuItem value="school-supplies">School Supplies</MenuItem>
                 <MenuItem value="accessories-bags">Accessories & Bags</MenuItem>
-                <MenuItem value="craft-art-supplies">Craft & Art Supplies</MenuItem>
+                <MenuItem value="craft-art-supplies">
+                  Craft & Art Supplies
+                </MenuItem>
                 <MenuItem value="fabric-textiles">Fabric and textiles</MenuItem>
                 <MenuItem value="others">Other</MenuItem>
-
               </TextField>
             </Grid>
 
