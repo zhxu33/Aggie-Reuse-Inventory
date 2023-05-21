@@ -14,7 +14,7 @@ const Navbar = () => {
     },
     palette: {
       primary: {
-        main: '#45ab1d',
+        main: '#ffffff',
         darker: '#053e85',
       },
       secondary: {
@@ -32,6 +32,14 @@ const Navbar = () => {
 
   const handleClick = () => {
     navigate("/");
+  };
+
+  const handleAccess = () => {
+    navigate("/Access");
+  };
+
+  const handleAdd = () => {
+    navigate("/Input");
   };
 
   return (
@@ -55,6 +63,8 @@ const Navbar = () => {
             }}>
               Home
             </Button>
+            <Button onClick={handleAdd}> Add </Button>
+            <Button onClick={handleAccess}> Access</Button>
           </ThemeProvider>
         </Toolbar>
       </AppBar>

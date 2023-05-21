@@ -1,0 +1,94 @@
+import React, { useState } from "react";
+import { Button, Card, CardHeader, Grid, TextField, Box, InputAdornment} from "@mui/material";
+import Navbar from "./NavBar.js";
+import MenuItem from '@mui/material/MenuItem';
+import Typography from "@mui/material/Typography";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import SearchIcon from '@material-ui/icons/Search';
+import SortIcon from '@mui/icons-material/Sort';
+
+
+const Access = () => {
+
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [sortOrder, setSortOrder] = React.useState('');
+  const [selectedItem, setSelectedItem] = React.useState('');
+
+  const handleSelectChange = (event) => {
+    setSelectedItem(event.target.value);
+  };
+
+  const handleSortChange = (event) => {
+    setSortOrder(event.target.value);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+  
+
+  return (
+    <div>
+      <Navbar />
+      <Grid container spacing={2} columns={16} padding={5}>
+        <Grid item xs={2}>
+          <TextField
+            select
+            fullWidth
+            label={
+            <div>
+              <SortIcon />
+            </div>}
+            value={sortOrder}
+            onChange={handleSortChange}
+            variant="outlined"
+          >
+            <MenuItem value="sortNew">Sort by New</MenuItem>
+            <MenuItem value="Sort">Sort by Old</MenuItem>
+          </TextField>
+        </Grid>
+        <Grid item xs={3}>
+          <TextField
+            select
+            fullWidth
+            label="Item Type"
+            value={selectedItem}
+            onChange={handleSelectChange}
+            variant="outlined"
+          >
+            <MenuItem value="clothing">Clothing</MenuItem>
+            <MenuItem value="school-supplies">School Supplies</MenuItem>
+            <MenuItem value="accessories-bags">Accessories & Bags</MenuItem>
+            <MenuItem value="craft-art-supplies">Craft & Art Supplies</MenuItem>
+            <MenuItem value="fabric-textiles">Fabric and textiles</MenuItem>
+            <MenuItem value="others">Other</MenuItem>
+          </TextField>
+        </Grid>
+        <Grid item md={9} xs={9}>
+          <TextField
+          value={searchTerm}
+          fullWidth
+          onChange={handleSearchChange}
+          placeholder="Search"
+          variant="outlined"
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon />
+              </InputAdornment>
+            ),
+          }}
+          />
+        </Grid>
+        <Grid item md={2} alignItems="center">
+          <Button sx={{mt: 1.5}}>
+              Search
+          </Button>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
+
+export default Access;
