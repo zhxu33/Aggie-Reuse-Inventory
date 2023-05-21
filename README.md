@@ -1,4 +1,3 @@
-![image](https://github.com/zhxu33/Aggie-Reuse-Inventory/assets/77419802/9b58f623-b123-4bfe-8849-f6428719d6b7)
 # Aggie-Reuse-Inventory
 A full stack web application for Aggie Reuse to log and keep track of store items.
 
