@@ -30,11 +30,33 @@ const Input = () => {
     } catch (error) {
       alert("Failed, please add item data");
     }
+    getItems(2, "Watch", "latest", "clothing"); //
   };
+
+  const [items, setItems] = useState([]); //
+  const getItems = async (page, search, sort, type) => {
+    try {
+      const response = await axios.get(
+        API_URL + "/" + page + "/" + search + "/" + sort + "/" + type
+      );
+      if (response.data) {
+        setItems(response.data);
+      }
+    } catch (error) {
+      alert("Failed, please add item data");
+    }
+  }; //
 
   return (
     <div style={{ height: "100vh" }}>
       <Navbar />
+      {items.map(({ name, description, category, _id }) => (
+        <div key={_id}>
+          <h1>{name}</h1>
+          <h2>{description}</h2>
+          <h3>{category}</h3>
+        </div>
+      ))}
       <form autoComplete="off" noValidate md={6} style={{ height: "100vh" }}>
         <Card
           sx={{
@@ -58,7 +80,7 @@ const Input = () => {
             paddingLeft={3}
             sx={{ mb: 1.5, fontWeight: "bold", color: "#054287" }}
           >
-            Add your item:
+            Add item:
           </Typography>
           <Grid
             container
