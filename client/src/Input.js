@@ -18,6 +18,12 @@ const Input = () => {
     console.log("name changed");
   };
 
+  const [selectedItem, setSelectedItem] = React.useState('');
+
+  const handleChange = (event) => {
+    setSelectedItem(event.target.value);
+  };
+
   const navigate = useNavigate();
   const API_URL = "http://localhost:5000/items";
 
