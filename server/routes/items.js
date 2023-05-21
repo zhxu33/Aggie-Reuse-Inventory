@@ -6,6 +6,7 @@ const Item = require("../models/Item");
 router.get("/", async (req, res) => {
   try {
     const items = await Item.find().limit(10);
+    res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -15,8 +16,8 @@ router.get("/", async (req, res) => {
 router.get("/:page", async (req, res) => {
   try {
     const items = await Item.find()
-      .limit(1)
-      .skip((req.params.page - 1) * 1);
+      .limit(10)
+      .skip((req.params.page - 1) * 10);
     res.json(items);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -24,32 +25,24 @@ router.get("/:page", async (req, res) => {
 });
 
 // master search
-router.get("/:page/:search/:sort/:type", async (req, res) => {
+router.get("/:page/:search/:type", async (req, res) => {
   try {
-    let items = await Items.find();
-    if (items.type != "None") {
+    var items = Item.find();
+    if (req.params.type != "None") {
       items = items.find({ category: req.params.type });
     }
     if (req.params.search.match(/^[0-9a-fA-F]{24}$/)) {
-      items = await Item.findById(req.params.search);
+      items = await items.findById(req.params.search);
     } else if (req.params.search != "None") {
-      items = await Item.find({
-        $or: [
-          { name: new RegExp(req.params.search) },
-          { description: new RegExp(req.params.search) },
-        ],
-      })
+      items = await items
+        .find({
+          $or: [
+            { name: new RegExp(req.params.search) },
+            { description: new RegExp(req.params.search) },
+          ],
+        })
         .limit(10)
-        .skip((req.params.page - 1) * 1);
-    }
-    if (items.sort == "latestAdded") {
-      items = items.sort({ createdAt: 1 });
-    } else if (items.sort == "oldestAdded") {
-      items = items.sort({ createdAt: -1 });
-    } else if (items.sort == "latestUpdated") {
-      items = items.sort({ updatedAt: 1 });
-    } else if (items.sort == "oldestUpdated") {
-      items = items.sort({ updatedAt: -1 });
+        .skip((req.params.page - 1) * 10);
     }
     res.json(items);
   } catch (err) {
