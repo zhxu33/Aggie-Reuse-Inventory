@@ -7,7 +7,17 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import SearchIcon from '@material-ui/icons/Search';
 import SortIcon from '@mui/icons-material/Sort';
+import { Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { makeStyles } from '@material-ui/core/styles';
 
+const useStyles = makeStyles((theme) => ({
+  accordion: {
+    // Adjust the height value to your desired height
+    minHeight: '6vh',
+    backgroundColor: '#f0f2f2',
+  },
+}));
 
 const Access = () => {
 
@@ -27,12 +37,28 @@ const Access = () => {
     setSearchTerm(event.target.value);
   };
   
+  const a = Array.from({ length: 100 }, (_, index) => index + 1); // array that will store the items (currently has a fixed length of 100)
+  const elementsPerPage = 10;
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const startIndex = (currentPage - 1) * elementsPerPage;
+  const endIndex = startIndex + elementsPerPage;
+  const visibleElements = a.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(a.length / elementsPerPage);
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const classes = useStyles();
 
   return (
-    <div>
+    <div style={{height: '100vh'}}>
       <Navbar />
-      <Grid container spacing={2} columns={16} padding={5}>
-        <Grid item xs={2}>
+      <Grid container spacing={2} columns={16} padding={5} rowSpacing={15} justifyContent='center' height='100vh'>
+        {/*<Grid item xs={2}>
           <TextField
             select
             fullWidth
@@ -47,7 +73,7 @@ const Access = () => {
             <MenuItem value="sortNew">Sort by New</MenuItem>
             <MenuItem value="Sort">Sort by Old</MenuItem>
           </TextField>
-        </Grid>
+        </Grid>*/}
         <Grid item xs={3}>
           <TextField
             select
@@ -86,17 +112,45 @@ const Access = () => {
               Search
           </Button>
         </Grid>
+        <Grid item md={14} alignItems="center">
+          <div>
+            {visibleElements.map((element) => (
+              <Accordion key={element} className={classes.accordion}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Typography>{element}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    Accordion Content for {element}
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            ))}
+          </div>
+        </Grid>
+        <Grid item md={12} alignItems="flex-end" justifyContent="center">
+        <Grid container justifyContent="center" alignItems="center">
+          {Array.from({ length: totalPages }, (_, index) => (
+              <Button
+                key={index + 1}
+                variant={currentPage === index + 1 ? 'contained' : 'outlined'}
+                color="primary"
+                justifyContent="center"
+                alignItems="center"
+                sx={{
+                  mr: 2
+                }}
+                onClick={() => handlePageChange(index + 1)}
+              >
+                {index + 1}
+              </Button>
+            ))}
+        </Grid>
+        </Grid>
       </Grid>
     </div>
 
-import React, { useState } from 'react';
-import { Accordion, AccordionSummary, AccordionDetails, Typography, Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-const a = Array.from({ length: 100 }, (_, index) => index + 1);
-const elementsPerPage = 10;
-
-const PageWithAccordions = () => {
+/*const PageWithAccordions = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const startIndex = (currentPage - 1) * elementsPerPage;
@@ -140,9 +194,9 @@ const PageWithAccordions = () => {
   );
 };
 
-export default PageWithAccordions;
+export default PageWithAccordions;*/
+
 
   );
 }
-
 export default Access;
