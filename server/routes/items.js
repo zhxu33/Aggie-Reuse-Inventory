@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Item = require("../models/Item");
 
-// Getting all
+//default search
 router.get("/", async (req, res) => {
   try {
     const items = await Item.find();
@@ -12,9 +12,25 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Getting One
-router.get("/:id", getItem, (req, res) => {
-  res.json(res.item);
+//master search
+router.get("/:search", async (req, res) => {
+  try {
+    if (req.params.search.match(/^[0-9a-fA-F]{24}$/)) {
+      items = await Item.findById(req.params.search);
+    } else if (req.params.search != "None") {
+      items = await Item.find({
+        $or: [
+          { name: new RegExp(req.params.search, "i") },
+          { description: new RegExp(req.params.search, "i") },
+        ],
+      })
+        .limit(10)
+        .skip((req.params.page - 1) * 10);
+    }
+    res.json(items);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // Creating one

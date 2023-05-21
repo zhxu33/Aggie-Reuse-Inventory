@@ -2,12 +2,7 @@ import * as React from "react";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 // import CameraIcon from "@mui/icons-material/PhotoCamera";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import CssBaseline from "@mui/material/CssBaseline";
-import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,13 +11,16 @@ import Container from "@mui/material/Container";
 import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import reuse_image from './images/aggiereuse_fe_Lugo1.jpeg';
+import reuse_image from "./images/aggiereuse_fe_Lugo1.jpeg";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://github.com/hdjekso/resume_builder">
+      <Link
+        color="inherit"
+        href="https://github.com/zhxu33/Aggie-Reuse-Inventory"
+      >
         Github
       </Link>{" "}
       {new Date().getFullYear()}
@@ -31,24 +29,22 @@ function Copyright() {
   );
 }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-
 const theme = createTheme({
   status: {
-    danger: '#e53e3e',
+    danger: "#e53e3e",
   },
   palette: {
     primary: {
-      main: '#2f4170',
-      darker: '#053e85',
+      main: "#2f4170",
+      darker: "#053e85",
     },
     secondary: {
       main: "#2f4170",
       contrastText: "#ffffff",
     },
     neutral: {
-      main: '#ffffff',
-      contrastText: '#fff',
+      main: "#ffffff",
+      contrastText: "#fff",
     },
   },
 });
@@ -67,15 +63,21 @@ export default function Dashboard() {
         <Toolbar>
           {/* <CameraIcon sx={{ mr: 2 }} /> */}
           <Typography variant="h6" color="inherit" noWrap>
-            Aggie Reuse Inventory Updater
+            Aggie Reuse Inventory
           </Typography>
         </Toolbar>
       </AppBar>
-      <main style={{ backgroundImage:`url(${reuse_image})`, backgroundRepeat: "no-repeat", backgroundSize: 'cover',}}>
+      <main
+        style={{
+          backgroundImage: `url(${reuse_image})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "cover",
+        }}
+      >
         {/* Hero unit */}
         <Box
           sx={{
-            height: '80vh',
+            height: "80vh",
             backgroundImage: "url(${reuse_image})",
             backgroundRepeat: "no-repeat",
           }}
@@ -88,9 +90,9 @@ export default function Dashboard() {
               align="center"
               color="#FFD700"
               gutterBottom
-              fontWeight={'bold'}
+              fontWeight={"bold"}
             >
-              Aggie Reuse Inventory Updater
+              Aggie Reuse Inventory
             </Typography>
             <Stack
               sx={{ pt: 4 }}
@@ -98,14 +100,36 @@ export default function Dashboard() {
               spacing={2}
               justifyContent="center"
             >
-              <Button variant="contained" sx={{maxWidth: '100px', maxHeight: '50px', minWidth: '100px', minHeight: '50px', fontSize:"20px", mt: 10}}onClick={handleClick}>start</Button>
+              <Button
+                variant="contained"
+                sx={{
+                  maxWidth: "100px",
+                  maxHeight: "50px",
+                  minWidth: "100px",
+                  minHeight: "50px",
+                  fontSize: "20px",
+                  mt: 10,
+                }}
+                onClick={handleClick}
+              >
+                start
+              </Button>
               {/* <Button variant="outlined">sign in</Button> */}
             </Stack>
           </Container>
         </Box>
       </main>
       {/* Footer */}
-      <Box sx={{ bgcolor: "background.paper", p: 6 ,position: "fixed",bottom:0, width:"100vw"}}  component="footer">
+      <Box
+        sx={{
+          bgcolor: "background.paper",
+          p: 6,
+          position: "fixed",
+          bottom: 0,
+          width: "100vw",
+        }}
+        component="footer"
+      >
         <Typography
           variant="subtitle1"
           align="center"

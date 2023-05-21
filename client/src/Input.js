@@ -25,7 +25,7 @@ const Input = () => {
     try {
       const response = await axios.post(API_URL, itemData);
       if (response.data) {
-        alert("Item added successfully!");
+        alert("Successfully added item id " + response.data._id);
       }
     } catch (error) {
       alert("Failed, please add item data");
@@ -58,7 +58,7 @@ const Input = () => {
             paddingLeft={3}
             sx={{ mb: 1.5, fontWeight: "bold", color: "#054287" }}
           >
-            Add your item:
+            Add item:
           </Typography>
           <Grid
             container
@@ -71,7 +71,7 @@ const Input = () => {
               <TextField
                 sx={{ minWidth: "49%", backgroundColor: "#ffffff" }}
                 required
-                label="Item name"
+                label="Item Name"
                 variant="outlined"
                 value={itemName}
                 onChange={(event) => {
