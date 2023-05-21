@@ -14,7 +14,7 @@ const Input = () => {
     setSelectedItem(event.target.value);
   };
 
-  const API_URL = "http://localhost:5000/items";
+  const API_URL = "/items";
 
   const handleSubmit = async () => {
     const itemData = {

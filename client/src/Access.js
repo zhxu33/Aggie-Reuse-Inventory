@@ -28,6 +28,13 @@ const Access = () => {
   const [selectedItem, setSelectedItem] = React.useState("");
   const [items, setItems] = useState([]);
 
+  setTimeout(function () {
+    if (window.location.hash !== "#r") {
+      window.location.hash = "r";
+      window.location.reload(1);
+    }
+  }, 0);
+
   useEffect(() => {
     getItems();
   }, [sortOrder, selectedItem]);
@@ -59,13 +66,14 @@ const Access = () => {
 
   const classes = useStyles();
 
-  const API_URL = "http://localhost:5000/items";
+  const API_URL = "/items";
   const getItems = async () => {
     try {
       let response;
       if (searchTerm === "") {
         response = await axios.get(API_URL);
       } else {
+        console.log(API_URL + "/" + searchTerm);
         response = await axios.get(API_URL + "/" + searchTerm);
       }
       if (response.data) {
