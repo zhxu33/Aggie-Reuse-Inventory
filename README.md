@@ -9,11 +9,30 @@ Demo Link: https://aggie-reuse-inventory.herokuapp.com/
 We built the frontend of this app using Javascript, React and Material-UI. The backend is built using Node.js, Express, and a MongoDB database.
 
 # Features
-Add items page
-Access items page 
-Sorting functions by date
-Filter by category and search bar keywords
-Edit and Delete function (WIP)
+* Add items page
+
+* Access items page 
+
+* Sorting functions by date
+
+* Filter by category and search bar keywords
+
+* Edit and Delete function (WIP)
+
+# Getting started
+
+Install Backend node modules
+
+```npm install```
+
+Install React node modules:
+
+```$cd client``` and ```$ npm i```
+
+Run App: 
+
+```$npm run dev```
+
 
 
 
