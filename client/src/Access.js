@@ -57,7 +57,7 @@ const Access = () => {
   return (
     <div style={{height: '100vh'}}>
       <Navbar />
-      <Grid container spacing={2} columns={16} padding={5} rowSpacing={15} justifyContent='center' height='100vh'>
+      <Grid container spacing={2} columns={16} padding={5} rowSpacing={10} justifyContent='center' height='80vh'>
         {/*<Grid item xs={2}>
           <TextField
             select
@@ -129,7 +129,7 @@ const Access = () => {
           </div>
         </Grid>
         <Grid item md={12} alignItems="flex-end" justifyContent="center">
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid container justifyContent="center" alignItems="center" mb={3}>
           {Array.from({ length: totalPages }, (_, index) => (
               <Button
                 key={index + 1}
