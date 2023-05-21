@@ -149,54 +149,6 @@ const Access = () => {
         </Grid>
       </Grid>
     </div>
-
-/*const PageWithAccordions = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const startIndex = (currentPage - 1) * elementsPerPage;
-  const endIndex = startIndex + elementsPerPage;
-  const visibleElements = a.slice(startIndex, endIndex);
-
-  const totalPages = Math.ceil(a.length / elementsPerPage);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  return (
-    <div>
-      {visibleElements.map((element) => (
-        <Accordion key={element}>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography>{element}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Typography>
-              Accordion Content for {element}
-            </Typography>
-          </AccordionDetails>
-        </Accordion>
-      ))}
-
-      <div>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <Button
-            key={index + 1}
-            variant={currentPage === index + 1 ? 'contained' : 'outlined'}
-            color="primary"
-            onClick={() => handlePageChange(index + 1)}
-          >
-            {index + 1}
-          </Button>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export default PageWithAccordions;*/
-
-
   );
 }
 export default Access;

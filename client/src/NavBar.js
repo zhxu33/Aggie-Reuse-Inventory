@@ -34,12 +34,12 @@ const Navbar = () => {
     navigate("/");
   };
 
-  const handleAccess = () => {
-    navigate("/Access");
-  };
-
   const handleAdd = () => {
     navigate("/Input");
+  };
+
+  const handleAccess = () => {
+    navigate("/Access");
   };
 
   return (
