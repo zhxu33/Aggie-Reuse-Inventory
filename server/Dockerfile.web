@@ -14,6 +14,7 @@ EXPOSE 5000
 
 CMD ["npm", "start"]
 
+#docker run -it -p 5000:5000 aggie-reuse-inventory
 #docker build -t aggie-reuse-inventory -f Dockerfile.web .
 #heroku container:push --recursive -a aggie-reuse-inventory
 #heroku container:release -a aggie-reuse-inventory web
