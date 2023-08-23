@@ -78,7 +78,6 @@ export default function Dashboard() {
         <Box
           sx={{
             height: "80vh",
-            backgroundImage: "url(${reuse_image})",
             backgroundRepeat: "no-repeat",
           }}
         >

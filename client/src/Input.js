@@ -10,6 +10,15 @@ const Input = () => {
   const [itemDesc, setItemDesc] = useState("");
   const [selectedItem, setSelectedItem] = React.useState("");
 
+  const categories = [
+    "Clothing",
+    "School Supplies",
+    "Accessories & Bags",
+    "Craft & Art Supplies",
+    "Fabric & Texiles",
+    "Others",
+  ];
+
   const handleChange = (event) => {
     setSelectedItem(event.target.value);
   };
@@ -22,20 +31,24 @@ const Input = () => {
       description: itemDesc,
       category: selectedItem,
     };
-    try {
-      const response = await axios.post(API_URL, itemData);
-      if (response.data) {
-        alert("Successfully added item id " + response.data._id);
+    if (itemName && itemDesc && selectedItem) {
+      try {
+        const response = await axios.post(API_URL, itemData);
+        if (response.data) {
+          alert("Successfully added item id " + response.data.id);
+        }
+      } catch (error) {
+        alert("Failed, please add item data");
       }
-    } catch (error) {
-      alert("Failed, please add item data");
+    } else {
+      alert("Please enter data");
     }
   };
 
   return (
     <div style={{ height: "100vh" }}>
       <Navbar />
-      <form autoComplete="off" noValidate md={6} style={{ height: "100vh" }}>
+      <form autoComplete="off" noValidate md={6} style={{ height: "50vh" }}>
         <Card
           sx={{
             border: 1,
@@ -90,14 +103,13 @@ const Input = () => {
                 value={selectedItem}
                 onChange={handleChange}
               >
-                <MenuItem value="clothing">Clothing</MenuItem>
-                <MenuItem value="school-supplies">School Supplies</MenuItem>
-                <MenuItem value="accessories-bags">Accessories & Bags</MenuItem>
-                <MenuItem value="craft-art-supplies">
-                  Craft & Art Supplies
-                </MenuItem>
-                <MenuItem value="fabric-textiles">Fabric and textiles</MenuItem>
-                <MenuItem value="others">Other</MenuItem>
+                {categories.map(function (category, i) {
+                  return (
+                    <MenuItem key={i} value={category}>
+                      {category}
+                    </MenuItem>
+                  );
+                })}
               </TextField>
             </Grid>
 

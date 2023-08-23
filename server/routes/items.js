@@ -1,95 +1,72 @@
 const express = require("express");
 const router = express.Router();
-const Item = require("../models/item");
-
-//default search
-router.get("/", async (req, res) => {
-  try {
-    const items = await Item.find();
-    res.json(items);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
+const pool = require("../config/db");
 
 //master search
 router.get("/:search", async (req, res) => {
   try {
-    if (req.params.search.match(/^[0-9a-fA-F]{24}$/)) {
-      items = await Item.findById(req.params.search);
-    } else if (req.params.search != "None") {
-      items = await Item.find({
-        $or: [
-          { name: new RegExp(req.params.search, "i") },
-          { description: new RegExp(req.params.search, "i") },
-        ],
-      })
-        .limit(10)
-        .skip((req.params.page - 1) * 10);
-    }
-    res.json(items);
+    const search = req.params.search.toLowerCase();
+    id = Number(search) ? Number(search) : -1;
+    const items = await pool.query(
+      "SELECT * FROM items WHERE LOWER(items.name) LIKE $1 OR LOWER(items.category) LIKE $1 OR LOWER(items.description) LIKE $1 OR id = $2",
+      ["%" + search + "%", id]
+    );
+    res.json(items.rows);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-// Creating one
+//default search
+router.get("/", async (req, res) => {
+  try {
+    const items = await pool.query("SELECT * FROM items");
+    res.json(items.rows);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Create item
 router.post("/", async (req, res) => {
-  const item = new Item({
-    name: req.body.name,
-    description: req.body.description,
-    category: req.body.category,
-  });
   try {
-    const newItem = await item.save();
-    res.status(201).json(newItem);
+    const { name, category, description } = req.body;
+    const newItem = await pool.query(
+      "INSERT INTO items (name, category, description) VALUES($1, $2, $3) RETURNING *",
+      [name, category, description]
+    );
+    res.json(newItem.rows[0]);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// Updating One
-router.patch("/:id", getItem, async (req, res) => {
-  if (req.body.name != null) {
-    res.item.name = req.body.name;
-  }
-  if (req.body.description != null) {
-    res.item.description = req.body.description;
-  }
-  if (req.body.category != null) {
-    res.item.category = req.body.category;
-  }
+//Delete Item
+router.delete("/:id", async (req, res) => {
   try {
-    const updatedItem = await res.item.save();
-    res.json(updatedItem);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// Deleting One
-router.delete("/:id", getItem, async (req, res) => {
-  try {
-    await res.item.deleteOne();
-    res.json({ message: "Deleted item" });
+    const { id } = req.params;
+    const deleteItem = await pool.query("DELETE FROM items WHERE id = $1", [
+      id,
+    ]);
+    res.json("Deleted item");
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-async function getItem(req, res, next) {
-  let item;
+//Update Item
+router.put("/:id", async (req, res) => {
   try {
-    item = await Item.findById(req.params.id);
-    if (item == null) {
-      return res.status(404).json({ message: "Cannot find item" });
-    }
+    const { id } = req.params;
+    const { name, category, description } = req.body;
+    const updatedItem = await pool.query(
+      "UPDATE items SET name=$1, category=$2, description=$3 WHERE id = $4",
+      [name, category, description, id]
+    );
+    res.json("Updated item");
   } catch (err) {
-    return res.status(500).json({ message: err.message });
+    res.status(400).json({ message: err.message });
   }
-
-  res.item = item;
-  next();
-}
+});
 
 module.exports = router;
