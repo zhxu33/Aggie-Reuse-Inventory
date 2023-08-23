@@ -1,0 +1,20 @@
+FROM node:14
+
+WORKDIR /usr/local/bin/server
+
+COPY . /usr/local/bin/server/
+
+RUN npm install
+
+RUN npm install --force --prefix client
+
+RUN npm run --force --prefix client build
+
+EXPOSE 5000
+
+CMD ["npm", "start"]
+
+#docker build -t aggie-reuse-inventory -f Dockerfile.web .
+#heroku container:push --recursive -a aggie-reuse-inventory
+#heroku container:release -a aggie-reuse-inventory web
+#heroku open --app aggie-reuse-inventory
