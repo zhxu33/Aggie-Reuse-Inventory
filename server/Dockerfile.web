@@ -8,11 +8,19 @@ RUN npm install
 
 # RUN npm install --force --prefix client 
 
-# RUN npm run --force --prefix client build (failing for some reason, do npm run build instead in client),
+# RUN npm run --force --prefix client build (fails for some reason, run command in server before building docker file),
 
 EXPOSE 5000
 
 CMD ["npm", "start"]
+
+#add .env
+#user = user
+#password = password
+#host = connection_link
+#dbport = 5432
+#database = database_name
+#NODE_ENV = production
 
 #build test
 #docker build -t aggie-reuse-inventory -f Dockerfile.web .

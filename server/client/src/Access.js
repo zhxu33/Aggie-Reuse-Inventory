@@ -30,11 +30,16 @@ const Access = () => {
   const [selectedCategory, setselectedCategory] = React.useState("All");
   const [items, setItems] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
+  const [editedData, setEditedData] = useState({
+    name: "",
+    category: "",
+    description: "",
+  });
 
   useEffect(() => {
     getItems();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedCategory, searchTerm]);
+  }, [selectedCategory]);
 
   const handleCategoryChange = (event) => {
     setselectedCategory(event.target.value);
@@ -46,6 +51,35 @@ const Access = () => {
 
   const handleSelectionChange = (selection) => {
     setSelectedRows(selection);
+  };
+
+  const handleAddItem = async () => {
+    if (editedData.name && editedData.description && editedData.category) {
+      try {
+        const response = await axios.post(API_URL, editedData);
+        getItems();
+        if (response.data) {
+          alert("Successfully added item id " + response.data.id);
+        }
+      } catch (error) {
+        alert("Failed, please add item data");
+      }
+    } else {
+      alert("Please enter data");
+    }
+  };
+
+  const handleEditItem = async () => {
+    if (selectedRows.length === 1) {
+      try {
+        await axios.put(API_URL + "/" + selectedRows[0], editedData);
+        getItems();
+      } catch (error) {
+        alert("Failed, please add item data");
+      }
+    } else {
+      alert("Please select data");
+    }
   };
 
   const handleDeleteClick = async () => {
@@ -70,13 +104,13 @@ const Access = () => {
         response = await axios.get(API_URL + "/" + searchTerm);
       }
       if (response.data) {
-        let tempItems = response.data;
+        let items = response.data;
         if (selectedCategory !== "All") {
-          tempItems = tempItems.filter((item) => {
+          items = items.filter((item) => {
             return item.category === selectedCategory;
           });
         }
-        setItems(tempItems);
+        setItems(items);
       }
     } catch (error) {
       alert("Failed, please retry");
@@ -99,7 +133,7 @@ const Access = () => {
           <TextField
             select
             fullWidth
-            label="Item Type"
+            label="Category"
             value={selectedCategory}
             onChange={handleCategoryChange}
             variant="outlined"
@@ -129,22 +163,116 @@ const Access = () => {
             }}
           />
         </Grid>
-        <Paper style={{ mt: "20%", height: "100%", width: "90%" }}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleDeleteClick}
-            style={{ marginTop: 10 }}
-            disabled={selectedRows.length === 0}
-          >
-            Delete
+        <Grid item md={2} alignItems="center">
+          <Button sx={{ mt: 1.5 }} onClick={getItems}>
+            Search
           </Button>
+        </Grid>
+        <Paper style={{ marginTop: 20, height: "90%", width: "90%" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: 10,
+              flexWrap: "wrap",
+            }}
+          >
+            <Button
+              variant="contained"
+              color="primary"
+              style={{
+                marginRight: 8,
+              }}
+              onClick={handleAddItem}
+            >
+              Add
+            </Button>
+            <TextField
+              label="Name"
+              variant="outlined"
+              size="small"
+              value={editedData.name}
+              onChange={(e) =>
+                setEditedData({ ...editedData, name: e.target.value })
+              }
+              style={{
+                marginRight: 8,
+                flexShrink: 1,
+                minWidth: 100,
+                maxWidth: 200,
+                flexGrow: 1,
+              }}
+            />
+            <TextField
+              select
+              label="Edit Category"
+              size="small"
+              value={editedData.category}
+              variant="outlined"
+              style={{
+                marginRight: 8,
+                flexShrink: 1,
+                minWidth: 100,
+                maxWidth: 200,
+                flexGrow: 1,
+              }}
+              onChange={(e) =>
+                setEditedData({ ...editedData, category: e.target.value })
+              }
+            >
+              {categories.map(
+                (category, i) =>
+                  i !== 0 && (
+                    <MenuItem key={i} value={category}>
+                      {category}
+                    </MenuItem>
+                  )
+              )}
+            </TextField>
+            <TextField
+              label="Description"
+              variant="outlined"
+              size="small"
+              value={editedData.description}
+              onChange={(e) =>
+                setEditedData({ ...editedData, description: e.target.value })
+              }
+              style={{
+                marginRight: 8,
+                flexShrink: 1,
+                minWidth: 100,
+                flexGrow: 1,
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={selectedRows.length !== 1}
+              onClick={handleEditItem}
+            >
+              Update
+            </Button>
+          </div>
           <DataGrid
             rows={items}
             columns={columns}
             checkboxSelection
             onRowSelectionModelChange={handleSelectionChange}
           />
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleDeleteClick}
+            style={{ marginTop: 10 }}
+            disabled={selectedRows.length === 0}
+            initialState={{
+              sorting: {
+                sortModel: [{ field: "id", sort: "desc" }],
+              },
+            }}
+          >
+            Delete
+          </Button>
         </Paper>
       </Grid>
     </div>

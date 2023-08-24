@@ -59,10 +59,21 @@ router.put("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { name, category, description } = req.body;
-    const updatedItem = await pool.query(
-      "UPDATE items SET name=$1, category=$2, description=$3 WHERE id = $4",
-      [name, category, description, id]
-    );
+    if (name) {
+      await pool.query("UPDATE items SET name=$1 WHERE id = $2", [name, id]);
+    }
+    if (category) {
+      await pool.query("UPDATE items SET category=$1 WHERE id = $2", [
+        category,
+        id,
+      ]);
+    }
+    if (description) {
+      await pool.query("UPDATE items SET description=$1 WHERE id = $2", [
+        description,
+        id,
+      ]);
+    }
     res.json("Updated item");
   } catch (err) {
     res.status(400).json({ message: err.message });
