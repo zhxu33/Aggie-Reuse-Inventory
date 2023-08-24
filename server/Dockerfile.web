@@ -1,21 +1,26 @@
 FROM node:14
 
-WORKDIR /usr/local/bin/server
+WORKDIR /app
 
-COPY . /usr/local/bin/server/
+COPY . .
 
 RUN npm install
 
-RUN npm install --force --prefix client
+# RUN npm install --force --prefix client 
 
-RUN npm run --force --prefix client build
+# RUN npm run --force --prefix client build (failing for some reason, do npm run build instead in client),
 
 EXPOSE 5000
 
 CMD ["npm", "start"]
 
-#docker run -it -p 5000:5000 aggie-reuse-inventory
+#build test
 #docker build -t aggie-reuse-inventory -f Dockerfile.web .
+#docker run -it -p 5000:5000 aggie-reuse-inventory
+
+#deployment
+#heroku login
+#heroku container:login
 #heroku container:push --recursive -a aggie-reuse-inventory
 #heroku container:release -a aggie-reuse-inventory web
 #heroku open --app aggie-reuse-inventory
