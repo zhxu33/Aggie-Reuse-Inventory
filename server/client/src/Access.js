@@ -8,11 +8,11 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Paper } from "@mui/material";
 
 const columns = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "time", headerName: "Date", width: 300 },
-  { field: "name", headerName: "Name", width: 300 },
-  { field: "category", headerName: "Category", width: 300 },
-  { field: "description", headerName: "Description", width: 600 },
+  { field: "id", headerName: "ID", flex: 1, minWidth: 50 },
+  { field: "time", headerName: "Date", flex: 2, minWidth: 100 },
+  { field: "name", headerName: "Name", flex: 2, minWidth: 100 },
+  { field: "category", headerName: "Category", flex: 2, minWidth: 100 },
+  { field: "description", headerName: "Description", minWidth: 200 },
 ];
 
 const categories = [
@@ -35,6 +35,12 @@ const Access = () => {
     category: "",
     description: "",
   });
+  const [sortModel, setSortModel] = React.useState([
+    {
+      field: "id",
+      sort: "desc",
+    },
+  ]);
 
   useEffect(() => {
     getItems();
@@ -73,6 +79,7 @@ const Access = () => {
     if (selectedRows.length === 1) {
       try {
         await axios.put(API_URL + "/" + selectedRows[0], editedData);
+        alert("Successfully updated item!");
         getItems();
       } catch (error) {
         alert("Failed, please add item data");
@@ -87,6 +94,7 @@ const Access = () => {
       selectedRows.map(async function (id) {
         await axios.delete(API_URL + "/" + id);
       });
+      alert("Successfully deleted item(s)!");
       getItems();
     } catch (error) {
       alert("Failed to delete one or more items!");
@@ -197,11 +205,10 @@ const Access = () => {
               }
               style={{
                 marginRight: 8,
-                flexShrink: 1,
-                minWidth: 100,
-                maxWidth: 200,
-                flexGrow: 1,
+                minWidth: 50,
+                flex: 2,
               }}
+              inputProps={{ maxLength: 50 }}
             />
             <TextField
               select
@@ -211,10 +218,8 @@ const Access = () => {
               variant="outlined"
               style={{
                 marginRight: 8,
-                flexShrink: 1,
-                minWidth: 100,
-                maxWidth: 200,
-                flexGrow: 1,
+                minWidth: 50,
+                flex: 2,
               }}
               onChange={(e) =>
                 setEditedData({ ...editedData, category: e.target.value })
@@ -234,14 +239,14 @@ const Access = () => {
               variant="outlined"
               size="small"
               value={editedData.description}
+              inputProps={{ maxLength: 250 }}
               onChange={(e) =>
                 setEditedData({ ...editedData, description: e.target.value })
               }
               style={{
                 marginRight: 8,
-                flexShrink: 1,
                 minWidth: 100,
-                flexGrow: 1,
+                flex: 4,
               }}
             />
             <Button
@@ -258,6 +263,8 @@ const Access = () => {
             columns={columns}
             checkboxSelection
             onRowSelectionModelChange={handleSelectionChange}
+            sortModel={sortModel}
+            onSortModelChange={(model) => setSortModel(model)}
           />
           <Button
             variant="contained"
@@ -265,11 +272,6 @@ const Access = () => {
             onClick={handleDeleteClick}
             style={{ marginTop: 10 }}
             disabled={selectedRows.length === 0}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: "id", sort: "desc" }],
-              },
-            }}
           >
             Delete
           </Button>

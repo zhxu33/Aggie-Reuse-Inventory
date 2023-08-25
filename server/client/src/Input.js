@@ -90,6 +90,7 @@ const Input = () => {
                 onChange={(event) => {
                   setItemName(event.target.value);
                 }}
+                inputProps={{ maxLength: 50 }}
               />
             </Grid>
 
@@ -121,6 +122,7 @@ const Input = () => {
                 label="Item Description"
                 variant="outlined"
                 multiline
+                inputProps={{ maxLength: 250 }}
                 onChange={(event) => {
                   setItemDesc(event.target.value);
                 }}
