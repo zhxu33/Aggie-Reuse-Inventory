@@ -8,4 +8,14 @@ const pool = new Pool({
   database: process.env.database,
 });
 
+pool.query("SELECT 1", (error) => {
+  if (error) throw error;
+  console.log("Connected to database!");
+});
+
+pool.query("SELECT * FROM items", (error) => {
+  if (error) throw error;
+  console.log("items table found!");
+});
+
 module.exports = pool;
