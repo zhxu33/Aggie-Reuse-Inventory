@@ -12,7 +12,7 @@ const columns = [
   { field: "time", headerName: "Date", flex: 2, minWidth: 100 },
   { field: "name", headerName: "Name", flex: 2, minWidth: 100 },
   { field: "category", headerName: "Category", flex: 2, minWidth: 100 },
-  { field: "description", headerName: "Description", minWidth: 200 },
+  { field: "description", headerName: "Description", flex: 4, minWidth: 200 },
 ];
 
 const categories = [
