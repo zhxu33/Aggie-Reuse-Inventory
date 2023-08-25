@@ -1,11 +1,6 @@
 # Aggie Reuse Inventory
 A web application for Aggie Reuse thrift store to keep track inventory items.
 
-## Demo: 
-https://aggie-reuse-inventory-108edb5bada0.herokuapp.com/
-
-![image](https://github.com/zhxu33/Aggie-Reuse-Inventory/assets/77419802/609d7538-0a80-428a-9a14-f7c35f6eb0aa)
-
 ## Getting Started:
 
 ### Prerequisites
@@ -39,6 +34,11 @@ npm start dev
 ```
 docker compose up
 ```
+
+## Demo: 
+https://aggie-reuse-inventory-108edb5bada0.herokuapp.com/
+
+![image](https://github.com/zhxu33/Aggie-Reuse-Inventory/assets/77419802/609d7538-0a80-428a-9a14-f7c35f6eb0aa)
 
 
 
