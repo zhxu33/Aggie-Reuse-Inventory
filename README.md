@@ -27,13 +27,15 @@ https://aggie-reuse-inventory-108edb5bada0.herokuapp.com/
    ```sh
    npm install
    npm install --force --prefix client
-   ```   
+   ```
 ### Usage
+ * Configure proxy to "http:localhost:5000" in server/client/package.json
 ```sh
 npm start dev
 ```
 ### Run on local machine
-Download Docker: https://www.docker.com/products/docker-desktop/
+ * Docker: https://www.docker.com/products/docker-desktop
+ * Change proxy to "http://aggie-reuse-api:5000" in server/client/package.json
 ```
 docker compose up
 ```
