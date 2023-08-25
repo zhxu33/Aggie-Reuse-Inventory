@@ -8,8 +8,12 @@ A web application for Aggie Reuse thrift store to keep track inventory items.
   ```sh
   npm install npm@latest -g
   ```
-1. Add .env in server
-2. Configure environment variables
+1. Add .env to server
+   ```
+   cd server
+   cd . > .env
+   ```
+3. Configure environment variables
    ```
    user = user
    password = password
