@@ -27,8 +27,11 @@ CMD ["npm", "start"]
 #docker run -it -p 5000:5000 aggie-reuse-inventory
 
 #deployment
+#change file name to Dockerfile.web
 #heroku login
 #heroku container:login
 #heroku container:push --recursive -a aggie-reuse-inventory
 #heroku container:release -a aggie-reuse-inventory web
 #heroku open --app aggie-reuse-inventory
+
+#aws login: https://stackoverflow.com/questions/60807697/docker-login-error-storing-credentials-the-stub-received-bad-data
