@@ -16,17 +16,16 @@ docker compose up
 ```
 
 ### Prerequisites
-1.
 * npm
   ```sh
   npm install npm@latest -g
   ```
-2. Add .env to server
+1. Add .env to server
    ```
    cd server
    cd . > .env
    ```
-3. Configure environment variables
+2. Configure environment variables
    ```
    user = user
    password = password
@@ -35,7 +34,7 @@ docker compose up
    database = aggie_reuse_inventory
    NODE_ENV = production
    ```
-4. Install NPM packages
+3. Install NPM packages
    ```sh
    npm install
    npm install --force --prefix client
